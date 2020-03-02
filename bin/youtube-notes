@@ -1,4 +1,4 @@
-#!/bin/env ruby
+#!/usr/bin/env ruby
 
 require "rubygems"
 require "bundler/setup"
@@ -41,12 +41,16 @@ puts ep.title, "\n"
 
 doc = Nokogiri::HTML(ep.description)
 
+# Find the heading "Notas del episodio"
+divider = doc.at("p:has(strong:contains('Notas del episodio'))")
+
+
 # Description
-puts doc.css("p").map(&:text).join("\n\n")
+puts divider.xpath("preceding-sibling::p").map(&:text).join("\n\n")
 
 # Notes
 puts "\nNotas del episodio:\n\n"
-doc.css("li a[href]").each do |link|
+divider.xpath("following-sibling::*/a").each do |link|
   puts "▷ #{link.text}\n#{shorten_url(link[:href])}\n\n"
 end
 
