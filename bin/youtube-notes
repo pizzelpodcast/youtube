@@ -31,7 +31,7 @@ end
 
 PIZZEL_RSS = "https://www.pizzelpodcast.com/?format=rss"
 
-feed = open(PIZZEL_RSS) { |rss| RSS::Parser.parse(rss) }
+feed = URI.open(PIZZEL_RSS) { |rss| RSS::Parser.parse(rss) }
 
 ep_step = (ARGV[0].to_i || 0)
 
@@ -42,7 +42,7 @@ puts ep.title, "\n"
 doc = Nokogiri::HTML(ep.description)
 
 # Find the heading "Notas del episodio"
-divider = doc.at("p:has(strong:contains('Notas del episodio'))")
+divider = doc.at("p:has(strong:contains('del episodio'))")
 
 
 # Description
@@ -61,8 +61,11 @@ puts ep.link
 
 puts <<-EOS
 
-Suscribite al podcast en iTunes
-https://itunes.apple.com/ar/podcast/pizzel-podcast/id1092904384
+Suscribite al podcast en Spotify
+https://open.spotify.com/show/6B8EC58zUq9AhlM6tji2QD
+
+Suscribite al podcast en Apple Podcasts
+https://podcasts.apple.com/ar/podcast/pizzel-podcast/id1092904384
 
 Suscribite al podcast en iVoox
 https://www.ivoox.com/podcast-pizzel_sq_f1280950_1.html
